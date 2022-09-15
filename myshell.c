@@ -36,14 +36,15 @@ int main(void)
         if (strcmp(arg[0][0], "exit") == 0)
             exit(0);
 
-        printf("numberof pips: %d\n", numberOfPips);
+
         if(numberOfPips == 0){
             stdCall(arg);
         } else {
             pipeCall(arg, numberOfPips, true, temp, 0);
-            printf("\njeg er ude\n");
+            printf("\nventer på pids\n");
             waitpid(-1,status, 0);
-            //while ((c = getchar()) != '\n' && c != EOF) { }
+            printf("\npids done\n");
+            while ((c = getchar()) != '\n') { }
         }
     }
     return 0;
@@ -62,26 +63,26 @@ void pipeCall(char *arg[argPip][argArg], int numberOfPips, bool firstCall, int* 
     if ( pid  != 0){
         close(pFd[0]);
         close(pFd[1]);
+
         if(numberOfPips != 0){
             numberOfPips = numberOfPips - 1;
             pipeCall(arg, numberOfPips,false, fd, (i++));
         }
-        printf("venter på pid\n");
+        close(fd[0]);
+        close(fd[1]);
+        printf("done med child\n");
     } else {
-        if(!firstCall){
+        if(firstCall!=1){
             dup2(pFd[1], STDOUT_FILENO);
-
+        }
+        if(numberOfPips>0){
+            dup2(fd[0], STDIN_FILENO);
         }
         close(pFd[1]);
         close(pFd[0]);
-
-        if(numberOfPips>0){
-            dup2(fd[0], STDIN_FILENO);
-
-        }
         close(fd[1]);
         close(fd[0]);
-
+        printf("numberof pips: %d  first: %d\n", numberOfPips,firstCall);
         execvp(arg[numberOfPips][0], arg[numberOfPips]);
         printf("error\n");
         exit(1);
