@@ -8,15 +8,12 @@
 #define spaceChar ' '
 #define inputMaxSize 10000
 #define argPip 20 //max number of pips
-#define argArg 20 //max number of arguments
+#define argArg 20 //max number of arguments//nix pille
 
 void type_prompt();
 void readCommand(char* arg[argPip][argArg], char* input);
-int indexOf(char temp[500], int i);
-void setCommand(char *com, char *temp, int space);
-void setParameters(char *para, char temp[500], int space);
 
-int main(int argc, char const *argv[])
+int main(void)
 {
     char input[inputMaxSize];
     char* arg[argPip][argArg];
@@ -37,7 +34,6 @@ int main(int argc, char const *argv[])
                    , arg[i][12], arg[i][13], arg[i][14], arg[i][15], arg[i][16], arg[i][17], arg[i][18]
                    , arg[i][19], NULL);
             printf("error\n");
-            //printf("com: %s\narg1: %s",arg[0][0], arg[0][1]);
             exit(0);
         }
     } 
@@ -67,7 +63,7 @@ void readCommand (char* arg[argPip][argArg], char *input) {
     for (int i = 0; i < inputMaxSize; i++) {
         if(input[i] == '\n')
             input[i] = '\0';
-        if(input[i] == ' ') {
+        if(input[i] == spaceChar) {
             input[i] = '\0';
 
             arg[0][++a] = &input[i + 1];
@@ -76,24 +72,3 @@ void readCommand (char* arg[argPip][argArg], char *input) {
 
     return;
 }
-
-void setParameters(char *para, char * temp, int space) {
-    for (int i = space+1; i < strlen(para); ++i) {
-        para[i-(space+1)] = temp[i];
-    }
-}
-
-void setCommand(char *com, char *temp, int space) {
-    for (int i = 0; i < space; ++i) {
-        com[i] = temp[i];
-    }
-}
-
-int indexOf(char *temp, int i) {
-    int j = 0;
-    while (temp[j] != i){
-        j++;
-    }
-    return j;
-}
- 
