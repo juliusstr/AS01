@@ -15,7 +15,9 @@ void readCommand(char* arg[argPip][argArg], char* input, int* numberOfPips);
 
 void stdCall(char *arg[argPip][argArg]);
 
-void pipeCall(char *arg[argPip][argArg], int numberOfPips, bool firstCall, int* pFd, int i);
+int pipCall(char* arg[20][20], int numberOfPips);
+void recPipCall(char* arg[20][20], int numberOfPips, int i, int *fdOld);
+void childPipCall (int *fdOld, int *fdNew, char *arg[20][20], int i, int numberOfPips);
 
 int main(void)
 {
@@ -36,60 +38,67 @@ int main(void)
         if (strcmp(arg[0][0], "exit") == 0)
             exit(0);
 
-
         if(numberOfPips == 0){
             stdCall(arg);
         } else {
-            pipeCall(arg, numberOfPips, true, temp, 0);
-            printf("\nventer på pids\n");
-            waitpid(-1,status, 0);
-            printf("\npids done\n");
-            while ((c = getchar()) != '\n') { }
+            pipCall(arg, numberOfPips);
         }
     }
     return 0;
 }
 
-void pipeCall(char *arg[argPip][argArg], int numberOfPips, bool firstCall, int* pFd, int i) {
-    //printf("her");
-    int *status;
-    int fd [2];
-    if(pipe(fd) < 0)
-        exit(1);
+int pipCall(char* arg[20][20], int numberOfPips){
+    int fd[2];
+    if(pipe(fd) == -1)
+        return -1;
 
-    int pid = fork();
-    if(pid == -1)
-        exit(1);//err msg?
-    if ( pid  != 0){
-        close(pFd[0]);
-        close(pFd[1]);
+    recPipCall(arg,numberOfPips,0,fd);
+    return 1;
+}
 
-        if(numberOfPips != 0){
-            numberOfPips = numberOfPips - 1;
-            pipeCall(arg, numberOfPips,false, fd, (i++));
-        }
-        close(fd[0]);
-        close(fd[1]);
-        printf("done med child\n");
-    } else {
-        if(firstCall!=1){
-            dup2(pFd[1], STDOUT_FILENO);
-        }
-        if(numberOfPips>0){
-            dup2(fd[0], STDIN_FILENO);
-        }
-        close(pFd[1]);
-        close(pFd[0]);
-        close(fd[1]);
-        close(fd[0]);
-        printf("numberof pips: %d  first: %d\n", numberOfPips,firstCall);
-        execvp(arg[numberOfPips][0], arg[numberOfPips]);
-        printf("error\n");
+void recPipCall(char* arg[20][20], int numberOfPips, int i, int *fdOld){
+    int fdNew[2];
+    if(pipe(fdNew) == -1) {
+        printf("Pipe Error\n\n");
         exit(1);
     }
 
+    int pid1 = fork();
+    if (pid1 == -1) {
+        printf("eror");
+        exit(1);
+    }
 
-};
+    if(pid1 == 0){ //child
+        childPipCall(fdOld, fdNew, arg, i, numberOfPips);
+    }
+    close(fdOld[0]);
+    close(fdOld[1]);
+    waitpid(pid1/*pid1*/, NULL,0);
+    if(numberOfPips > 0)
+        recPipCall(arg, --numberOfPips, ++i, fdNew);
+}
+
+void childPipCall (int *fdOld, int *fdNew, char *arg[20][20], int i, int numberOfPips){
+    if(numberOfPips==0) {
+        dup2(fdOld[0], STDIN_FILENO);
+    } else if (i == 0){
+        dup2(fdNew[1], STDOUT_FILENO);
+    } else {
+        dup2(fdOld[0], STDIN_FILENO);
+        dup2(fdNew[1], STDOUT_FILENO);
+    }
+    close(fdNew[0]);
+    close(fdNew[1]);
+    close(fdOld[0]);
+    close(fdOld[1]);
+    execlp(arg[i][0], arg[i][0], arg[i][1], arg[i][2], arg[i][3], arg[i][4]
+            , arg[i][5], arg[i][6], arg[i][7], arg[i][8], arg[i][9], arg[i][10], arg[i][11]
+            , arg[i][12], arg[i][13], arg[i][14], arg[i][15], arg[i][16], arg[i][17], arg[i][18]
+            , arg[i][19], NULL);
+    printf("error\n");
+    exit(1);
+}
 
 void stdCall(char *arg[argPip][argArg]) {
     int * status;
@@ -138,7 +147,7 @@ void readCommand (char* arg[argPip][argArg], char *input, int *numberOfPips) {
             }
             *numberOfPips = *numberOfPips + 1;//*numberOfPips++;//virker ik :(
             argNumber = 0;
-            arg[pipNumber][argNumber] = input;
+            arg[pipNumber][argNumber] = &input[i+1];
         }
     }
 
