@@ -24,12 +24,6 @@ int main(void)
     char input[inputMaxSize];
     char* arg[argPip][argArg];
     int temp[2];
-    /*temp[0] = 0;
-    temp[1] = 0;
-    int c;
-    int *status;*/
-
-
 
     while(true) {
         int numberOfPips = 0;
@@ -74,7 +68,7 @@ void recPipCall(char* arg[argPip][argArg], int numberOfPips, int i, int *fdOld){
     }
     close(fdOld[0]);
     close(fdOld[1]);
-    waitpid(pid1/*pid1*/, NULL,0);
+    waitpid(pid1, NULL,0);
     if(numberOfPips > 0)
         recPipCall(arg, --numberOfPips, ++i, fdNew);
 }
@@ -92,19 +86,15 @@ void childPipCall (int *fdOld, int *fdNew, char *arg[argPip][argArg], int i, int
     close(fdNew[1]);
     close(fdOld[0]);
     close(fdOld[1]);
-    execlp(arg[i][0], arg[i][0], arg[i][1], arg[i][2], arg[i][3], arg[i][4]
-            , arg[i][5], arg[i][6], arg[i][7], arg[i][8], arg[i][9], arg[i][10], arg[i][11]
-            , arg[i][12], arg[i][13], arg[i][14], arg[i][15], arg[i][16], arg[i][17], arg[i][18]
-            , arg[i][19], NULL);
+    execvp(arg[i][0], arg[i]);
     printf("error\n");
     exit(1);
 }
 
 void stdCall(char *arg[argPip][argArg]) {
-    int * status;
     int pid = fork();
     if (pid == -1) {
-        printf("eror");
+        printf("error");
         exit(1);
     }
     if ( pid != 0){
