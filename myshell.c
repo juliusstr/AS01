@@ -24,10 +24,10 @@ int main(void)
     char input[inputMaxSize];
     char* arg[argPip][argArg];
     int temp[2];
-    temp[0] = 0;
+    /*temp[0] = 0;
     temp[1] = 0;
     int c;
-    int *status;
+    int *status;*/
 
 
 
@@ -102,13 +102,15 @@ void childPipCall (int *fdOld, int *fdNew, char *arg[argPip][argArg], int i, int
 
 void stdCall(char *arg[argPip][argArg]) {
     int * status;
-    if ( (fork())  != 0){
+    int pid = fork();
+    if ( pid != 0){
         waitpid(-1,status, 0);
     } else {
         execvp(arg[0][0], arg[0]);
         printf("error\n");
         exit(1);
     }
+    waitpid(pid, NULL,0);
 }
  
 void type_prompt(){;
@@ -119,7 +121,7 @@ void type_prompt(){;
 
 void readCommand (char* arg[argPip][argArg], char *input, int *numberOfPips) {
     int argNumber = 0;
-    int pipNumber = 0;
+    int pipNumber = 0;//skift til number of pips
     for (int i = 0; i < inputMaxSize; ++i) {
         input[i] = '\0';
     }
