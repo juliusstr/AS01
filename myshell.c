@@ -31,6 +31,10 @@ int main(void)
         readCommand(arg, input, &numberOfPips);
         if (strcmp(arg[0][0], "exit") == 0)
             exit(0);
+        if (strcmp(srg[0][0], "cd") == 0){
+            chdir(arg[0][1]);
+            continue;
+        }
 
         if(numberOfPips == 0){
             stdCall(arg);
