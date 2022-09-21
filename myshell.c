@@ -15,9 +15,9 @@ void readCommand(char* arg[argPip][argArg], char* input, int* numberOfPips);
 
 void stdCall(char *arg[argPip][argArg]);
 
-int pipCall(char* arg[20][20], int numberOfPips);
-void recPipCall(char* arg[20][20], int numberOfPips, int i, int *fdOld);
-void childPipCall (int *fdOld, int *fdNew, char *arg[20][20], int i, int numberOfPips);
+int pipCall(char* arg[argPip][argArg], int numberOfPips);
+void recPipCall(char* arg[argPip][argArg], int numberOfPips, int i, int *fdOld);
+void childPipCall (int *fdOld, int *fdNew, char *arg[argPip][argArg], int i, int numberOfPips);
 
 int main(void)
 {
@@ -47,7 +47,7 @@ int main(void)
     return 0;
 }
 
-int pipCall(char* arg[20][20], int numberOfPips){
+int pipCall(char* arg[argPip][argArg], int numberOfPips){
     int fd[2];
     if(pipe(fd) == -1)
         return -1;
@@ -56,7 +56,7 @@ int pipCall(char* arg[20][20], int numberOfPips){
     return 1;
 }
 
-void recPipCall(char* arg[20][20], int numberOfPips, int i, int *fdOld){
+void recPipCall(char* arg[argPip][argArg], int numberOfPips, int i, int *fdOld){
     int fdNew[2];
     if(pipe(fdNew) == -1) {
         printf("Pipe Error\n\n");
@@ -79,7 +79,7 @@ void recPipCall(char* arg[20][20], int numberOfPips, int i, int *fdOld){
         recPipCall(arg, --numberOfPips, ++i, fdNew);
 }
 
-void childPipCall (int *fdOld, int *fdNew, char *arg[20][20], int i, int numberOfPips){
+void childPipCall (int *fdOld, int *fdNew, char *arg[argPip][argArg], int i, int numberOfPips){
     if(numberOfPips==0) {
         dup2(fdOld[0], STDIN_FILENO);
     } else if (i == 0){
