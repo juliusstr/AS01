@@ -103,14 +103,18 @@ void childPipCall (int *fdOld, int *fdNew, char *arg[argPip][argArg], int i, int
 void stdCall(char *arg[argPip][argArg]) {
     int * status;
     int pid = fork();
+    if (pid == -1) {
+        printf("eror");
+        exit(1);
+    }
     if ( pid != 0){
-        waitpid(-1,status, 0);
+        waitpid(pid, NULL,0);
     } else {
         execvp(arg[0][0], arg[0]);
         printf("error\n");
         exit(1);
     }
-    waitpid(pid, NULL,0);
+
 }
  
 void type_prompt(){;
