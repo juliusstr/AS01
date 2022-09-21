@@ -115,7 +115,6 @@ void type_prompt(){;
 
 void readCommand (char* arg[argPip][argArg], char *input, int *numberOfPips) {
     int argNumber = 0;
-    int pipNumber = 0;//skift til number of pips
     for (int i = 0; i < inputMaxSize; ++i) {
         input[i] = '\0';
     }
@@ -126,24 +125,23 @@ void readCommand (char* arg[argPip][argArg], char *input, int *numberOfPips) {
         }
     }
     fgets(input, inputMaxSize, stdin);
-    arg[pipNumber][argNumber] = input;
+    arg[*numberOfPips][argNumber] = input;
 
     for (int i = 0; i < inputMaxSize; i++) {
         if (input[i] == '\n'){
             input[i] = '\0';
         }else if(input[i] == spaceChar) {
             input[i] = '\0';
-            arg[pipNumber][++argNumber] = &input[i + 1];
+            arg[*numberOfPips][++argNumber] = &input[i + 1];
         } else if(input[i] == '|'){
             input[i] = '\0';
-            pipNumber++;
             while (input[i] == spaceChar){
                 input[i] = '\0';
                 i++;
             }
-            *numberOfPips = *numberOfPips + 1;//*numberOfPips++;//virker ik :(
+            (*numberOfPips)++;
             argNumber = 0;
-            arg[pipNumber][argNumber] = &input[i+1];
+            arg[*numberOfPips][argNumber] = &input[i+1];
         }
     }
 
