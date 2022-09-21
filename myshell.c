@@ -59,7 +59,7 @@ void recPipCall(char* arg[argPip][argArg], int numberOfPips, int i, int *fdOld){
 
     int pid1 = fork();
     if (pid1 == -1) {
-        printf("eror");
+        printf("error\n");
         exit(1);
     }
 
@@ -94,7 +94,7 @@ void childPipCall (int *fdOld, int *fdNew, char *arg[argPip][argArg], int i, int
 void stdCall(char *arg[argPip][argArg]) {
     int pid = fork();
     if (pid == -1) {
-        printf("error");
+        printf("error\n");
         exit(1);
     }
     if ( pid != 0){
@@ -104,7 +104,6 @@ void stdCall(char *arg[argPip][argArg]) {
         printf("error\n");
         exit(1);
     }
-
 }
  
 void type_prompt(){;
@@ -124,6 +123,7 @@ void readCommand (char* arg[argPip][argArg], char *input, int *numberOfPips) {
             arg[i][j] = NULL;
         }
     }
+
     fgets(input, inputMaxSize, stdin);
     arg[*numberOfPips][argNumber] = input;
 
@@ -144,6 +144,4 @@ void readCommand (char* arg[argPip][argArg], char *input, int *numberOfPips) {
             arg[*numberOfPips][argNumber] = &input[i+1];
         }
     }
-
-    return;
 }
