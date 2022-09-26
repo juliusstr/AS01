@@ -1,1 +1,21 @@
+BIBLIOGRAPHY
 
+Tutorialspoint.com
+"Unix / Linux - Environment"
+https://www.tutorialspoint.com/unix/unix-environment.htm
+accessed: 26.09.2022
+
+Burgess, Mark
+"The unix programming environment"
+https://www.talisman.org/unix/burgess-guide.html
+accessed: 26.09.2022
+
+geeksforgeeks.com
+"chdir() in C language with examples"
+https://www.geeksforgeeks.org/chdir-in-c-language-with-examples/
+accessed: 26.09.2022
+
+Linuxize.com
+"How to Run Linux Commands in Background"
+https://linuxize.com/post/how-to-run-linux-commands-in-background/
+accessed: 26.09.2022
