@@ -1,13 +1,19 @@
 BIBLIOGRAPHY
 
-Tutorialspoint.com
-"Unix / Linux - Environment"
-https://www.tutorialspoint.com/unix/unix-environment.htm
-accessed: 26.09.2022
 
 Burgess, Mark
 "The unix programming environment"
 https://www.talisman.org/unix/burgess-guide.html
+accessed: 26.09.2022
+
+Collazo, David
+An Introduction to Linux I/O Redirection
+https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-i-o-redirection
+accessed: 26.09.2022
+
+Tutorialspoint.com
+"Unix / Linux - Environment"
+https://www.tutorialspoint.com/unix/unix-environment.htm
 accessed: 26.09.2022
 
 geeksforgeeks.com
@@ -19,3 +25,4 @@ Linuxize.com
 "How to Run Linux Commands in Background"
 https://linuxize.com/post/how-to-run-linux-commands-in-background/
 accessed: 26.09.2022
+
