@@ -12,6 +12,7 @@
 
 void type_prompt();
 void readCommand(char* arg[argPip][argArg], char* input, int* numberOfPips);
+int isPipOrSpace(char *input, int *i);
 
 void stdCall(char *arg[argPip][argArg]);
 
@@ -31,7 +32,7 @@ int main(void)
         readCommand(arg, input, &numberOfPips);
         if (strcmp(arg[0][0], "exit") == 0)
             exit(0);
-        if (strcmp(srg[0][0], "cd") == 0){
+        if (strcmp(arg[0][0], "cd") == 0){
             chdir(arg[0][1]);
             continue;
         }
@@ -132,20 +133,32 @@ void readCommand (char* arg[argPip][argArg], char *input, int *numberOfPips) {
     arg[*numberOfPips][argNumber] = input;
 
     for (int i = 0; i < inputMaxSize; i++) {
-        if (input[i] == '\n'){
+        if (input[i] == '\n') {
             input[i] = '\0';
-        }else if(input[i] == spaceChar) {
-            input[i] = '\0';
-            arg[*numberOfPips][++argNumber] = &input[i + 1];
-        } else if(input[i] == '|'){
-            input[i] = '\0';
-            while (input[i] == spaceChar){
-                input[i] = '\0';
-                i++;
-            }
+        }
+        int pipOrSpace = isPipOrSpace(input, &i);
+        if(pipOrSpace == 2){
+            arg[*numberOfPips][++argNumber] = &input[i];
+        } else if (pipOrSpace == 1){
             (*numberOfPips)++;
             argNumber = 0;
-            arg[*numberOfPips][argNumber] = &input[i+1];
+            arg[*numberOfPips][argNumber] = &input[i];
         }
     }
 }
+
+int isPipOrSpace(char *input, int *i){ //return 1 if next input is |, return 2 if next input is ' '// return 0 otherwise
+    int returnVal = 0;
+    while (input[*i] == ' ' || input[*i] == '|') {
+        if (input[*i] == '|') {
+            input[*i] = '\0';
+            returnVal = 1;
+        } else if (input[*i] == ' ' && returnVal != 1) {
+            input[*i] = '\0';
+            returnVal = 2;
+        }
+        (*i)++;
+    }
+    return returnVal;
+}
+
