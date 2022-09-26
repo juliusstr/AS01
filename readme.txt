@@ -19,27 +19,27 @@ This usermanual is intended for people with a basic understanding on how to oper
 The program 'myshell.c' is a Linux shell command interpreter which provides the interface between a user and a kernel, for the user to use various operating system services. The program accepts commands readable by humans, and converts these into 'kernel language'. This program is a 'Command Line Shell' in which the user interacts with a terminal in a Linux system.  
 
     ----- 1.1 HOW TO RUN THE SHELL -----
-There are 3 steps to running this program. 
+    There are 3 steps to running this program. 
 
-First, navigate to the directory in which 'myshell.c' is located, using the 'cd' command in your linux terminal, to double check if you're in the right directory, simply enter 'll'. This prints a list of directory contents to the terminal, where the file 'myshell.c' should be shown.
+    First, navigate to the directory in which 'myshell.c' is located, using the 'cd' command in your linux terminal, to double check if you're in the right directory, simply enter 'll'. This prints a list of directory contents to the terminal, where the file 'myshell.c' should be shown.
 
-For the program to run you need to compile it using 'gcc'.
-Enter 'gcc myshell.c' to compile the program. If the command 'gcc' is not found, gcc is not installed. This is easily corrected with the command 'sudo apt install gcc'.
+    For the program to run you need to compile it using 'gcc'.
+    Enter 'gcc myshell.c' to compile the program. If the command 'gcc' is not found, gcc is not installed. This is easily corrected with the command 'sudo apt install gcc'.
 
-When compiled, simply enter './a.out' to execute the program, the program is now running, anything you write in the shell hereon will be interperated by 'myshell.c'. 
+    When compiled, simply enter './a.out' to execute the program, the program is now running, anything you write in the shell hereon will be interperated by 'myshell.c'. 
 
     ----- 1.2 EXAMPLE OF USE -----
-An example on how to use the program could be sorting a '.txt' document alphabetically. This is done by first placing the .txt file in the directory in which 'myshell.c' is executed from, and running the command 'cat (filename) | sort'
+    An example on how to use the program could be sorting a '.txt' document alphabetically. This is done by first placing the .txt file in the directory in which 'myshell.c' is executed from, and running the command 'cat (filename) | sort'
 
-Your '.txt' file is now printed in alphabetical order to the terminal.
+    Your '.txt' file is now printed in alphabetical order to the terminal.
 
     ----- 1.3 USING PIPES -----
-The ability to use pipes is implemented in myshell.c.
-The example above illustrates the use of pipes. The symbol '|' 'pipes' the output of one command to the input of another. 
-The syntax is as follows: 
-'[command x] [arguments] | [command y] [arguments]'
-Remember to seperate commands and arguments with spaces.
-The output of command x becomes the input for command y. Thus, inputs for command y do not need to be specified. In theory, you can chain together an unlimited number of commands (until you run out of memory) with pipes.
+    The ability to use pipes is implemented in myshell.c.
+    The example above illustrates the use of pipes. The symbol '|' 'pipes' the output of one command to the input of another. 
+    The syntax is as follows: 
+    '[command x] [arguments] | [command y] [arguments]'
+    Remember to seperate commands and arguments with spaces.
+    The output of command x becomes the input for command y. Thus, inputs for command y do not need to be specified. In theory, you can chain together an unlimited number of commands (until you run out of memory) with pipes.
 
 
 ---------- 2. USEFUL KNOWLEDGE ----------
@@ -66,13 +66,13 @@ A lot happens 'behind the scenes' when executing a program. This section covers 
     
     ----- 2.4. BACKGROUND PROGRAM EXECUTION -----
     To run a process or a command from a terminal in the background without intervention from the user, you have to consider the following, when running such a background command one should use the syntax "(command) &". 
-The '&' (ampersand) specifies to the terminal that this command should execute in the background, and the shell job ID will be printed to the terminal, along with the assigned jobspec. The jobspec is a number assigned to the job when it is sent to the background. The most recent job sent to the background will have the highest number.
-As a user can execute more than 1 background command at a time, it's useful to keep track of the progress of these, this can be done with the "jobs -l" command, whereas the system will print the process ID and job state, of all user-started background processes. 
-If you want to bring a background process into the foreground, you can use the "fg" command to bring forth the most recent background process. For a specific process, use the "fg %[process ID]". 
-Sometimes a process doesn't behave as it should. This is where the "kill" command comes in handy. To kill a background process, simply type "kill [process ID]". 
-If you want to move a foreground process to the background, you simply stop the execution of the process by typing "Ctrl+Z" followed by entering the command "bg". 
+    The '&' (ampersand) specifies to the terminal that this command should execute in the background, and the shell job ID will be printed to the terminal, along with the assigned jobspec. The jobspec is a number assigned to the job when it is sent to the background. The most recent job sent to the background will have the highest number.
+    As a user can execute more than 1 background command at a time, it's useful to keep track of the progress of these, this can be done with the "jobs -l" command, whereas the system will print the process ID and job state, of all user-started background processes. 
+    If you want to bring a background process into the foreground, you can use the "fg" command to bring forth the most recent background process. For a specific process, use the "fg %[process ID]". 
+    Sometimes a process doesn't behave as it should. This is where the "kill" command comes in handy. To kill a background process, simply type "kill [process ID]". 
+    If you want to move a foreground process to the background, you simply stop the execution of the process by typing "Ctrl+Z" followed by entering the command "bg". 
 
-Whenever the shell is terminated, the background processes receive a hangup signal, causing them to terminate as well. 
-To prevent this from happening one can make the background processes run even after the shell is terminated. To disconnect a background process from the shell's job control, the shell built-in command "disown" is used to disconnect the current process. 
-To target a specific process, use "disown %[ID]". (The ID can be either the process ID or the jobspec. The jobspec is the number assigned to the process when it is viewed with the "jobs" command as aforementioned.).
-Another way to do the same is to use the command "nohup" this ignores all hangup signals, letting the processes continue running after the user has terminated the shell. 
+    Whenever the shell is terminated, the background processes receive a hangup signal, causing them to terminate as well. 
+    To prevent this from happening one can make the background processes run even after the shell is terminated. To disconnect a background process from the shell's job control, the shell built-in command "disown" is used to disconnect the current process. 
+    To target a specific process, use "disown %[ID]". (The ID can be either the process ID or the jobspec. The jobspec is the number assigned to the process when it is viewed with the "jobs" command as aforementioned.).
+    Another way to do the same is to use the command "nohup" this ignores all hangup signals, letting the processes continue running after the user has terminated the shell. 
