@@ -26,3 +26,7 @@ Linuxize.com
 https://linuxize.com/post/how-to-run-linux-commands-in-background/
 accessed: 26.09.2022
 
+man7.org
+bash(1) — Linux manual page
+https://www.man7.org/linux/man-pages/man1/bash.1.html
+accessed: 26.09.2022
