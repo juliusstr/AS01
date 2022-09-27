@@ -21,7 +21,7 @@ The program 'myshell.c' is a Linux shell command interpreter which provides the 
     ----- 1.1 HOW TO RUN THE SHELL -----
     There are 3 steps to running this program. 
 
-    First, navigate to the directory in which 'myshell.c' is located, using the 'cd' command in your linux terminal, to double check if you're in the right directory, simply enter 'll'. This prints a list of directory contents to the terminal, where the file 'myshell.c' should be shown.
+    First, navigate to the directory in which 'myshell.c' is located, using the 'cd' command in your linux terminal, to double check if you're in the right directory, simply enter 'ls'. This prints a list of directory contents to the terminal, where the file 'myshell.c' should be shown.
 
     For the program to run you need to compile it using 'gcc'.
     Enter 'gcc myshell.c' to compile the program. If the command 'gcc' is not found, gcc is not installed. This is easily corrected with the command 'sudo apt install gcc'.
